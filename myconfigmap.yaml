@@ -1,0 +1,26 @@
+apiVersion: v1
+data:
+  setupProxy.js: |+
+    const { createProxyMiddleware } = require('http-proxy-middleware');
+
+    module.exports = app => {
+      app.use(
+        "/reverser",
+        createProxyMiddleware({
+          target: "http://backend:5000",
+          changeOrigin: true
+        })
+      );
+
+      app.use(
+        "/summation",
+        createProxyMiddleware({
+          target: "http://backend:5000",
+          changeOrigin: true
+        })
+      );
+    }
+
+kind: ConfigMap
+metadata:
+  name: my-config-cm
