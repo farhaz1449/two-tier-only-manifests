@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      volumes:
+      - name: myvolume
+        configMap:
+          name: my-config-cm
+      containers:
+      - image: farhaz1449/frontend-opt
+        name: frontend-opt
+        volumeMounts:
+        - name: myvolume
+          mountPath: /frontend/src/setupProxy.js
+          subPath: setupProxy.js
+        resources: {}
+status: {}
